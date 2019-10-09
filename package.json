@@ -1,0 +1,11 @@
+{
+  "name": "barcode-validator",
+  "version": "1.0.0",
+  "description": "Node Javascript Barcode Validation for ISBN10, ISBN13, UPC, GTIN",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eric Blade",
+  "license": "MIT"
+}
