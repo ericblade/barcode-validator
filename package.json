@@ -1,8 +1,9 @@
 {
   "name": "barcode-validator",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Node Javascript Barcode Validation for ISBN10, ISBN13, UPC, GTIN",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
