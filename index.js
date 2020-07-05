@@ -134,9 +134,7 @@ const validatorMap = {
 // kind, or wants to know what kind it is, then don't pass the type.
 // From the return value, you probably want to make use of the modifiedCode value, as that will contain
 // the barcode that was actually validated -- ancient UPC codes pre-12 digit usage will be modified,
-// and the modifiedCode value will in the future contain the 978/979 version of 290/291 ISBNs.  In short,
-// if you pass in something that is an error, but *can* be fixed, it will be contained in the modifiedCode
-// return value.
+// if passed a "used" book code of 290 or 291, modifiedCode will contain the 978/979 bookland version.
 
 const validate = (code, type) => {
     // 1980s era UPC codes were apparently 11 digits, not using a checksum. So, if we get 11, I
@@ -146,6 +144,17 @@ const validate = (code, type) => {
         type = getTypeOfBarcode(modifiedCode);
     }
     // console.warn('* validating ', code, modifiedCode, type);
+    if (type === 'isbn13') {
+        if (modifiedCode.startsWith('290')) {
+            const [ junk1, junk2, junk3, ...rest ] = modifiedCode;
+            const baseCode = rest.join('');
+            modifiedCode = `978${baseCode}${getIsbn13Checksum(`978${baseCode}`)}`;
+        } else if (modifiedCode.startsWith('291')) {
+            const [ junk1, junk2, junk3, ...rest ] = modifiedCode;
+            const baseCode = rest.join('');
+            modifiedCode = `979${baseCode}${getIsbn13Checksum(`979${baseCode}`)}`
+        }
+    }
     const valid = (type !== 'asin' ? validationRegex.test(modifiedCode) : true) && validatorMap[type](modifiedCode);
     return {
         code,
