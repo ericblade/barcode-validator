@@ -166,7 +166,8 @@ const validate = (code, type) => {
 
 // console.warn(validate('092091900451')); // valid UPC
 // console.warn(validate('92091900451')); // valid old UPC
-console.warn(validate('0083717201410')); // should be a valid EAN / GTIN13
-console.warn(validate('00837172014104')); // should be a valid GTIN14 !!
+// console.warn(validate('0083717201410')); // should be a valid EAN / GTIN13
+// console.warn(validate('00837172014104')); // should be a valid GTIN14 !!
 // console.warn(validate('BOOTSTRA P')); // should be an invalid ASIN
-export default validate;
+// console.warn(getUpcChecksum('02035616631'));
+module.exports = validate;
