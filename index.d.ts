@@ -1,6 +1,6 @@
 type ReturnType = {
     code: string,
-    type: string,
+    type: 'asin' | 'isbn10' | 'upc' | 'isbn13' | 'gtin' | 'unknown',
     valid: boolean,
     modifiedCode: string,
 };

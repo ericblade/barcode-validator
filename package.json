@@ -1,6 +1,6 @@
 {
   "name": "barcode-validator",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Node Javascript Barcode Validation for ISBN10, ISBN13, UPC, GTIN",
   "main": "./index.js",
   "types": "./index.d.ts",

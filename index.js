@@ -155,7 +155,12 @@ const validate = (code, type) => {
             modifiedCode = `979${baseCode}${getIsbn13Checksum(`979${baseCode}`)}`
         }
     }
-    const valid = (type !== 'asin' ? validationRegex.test(modifiedCode) : true) && validatorMap[type](modifiedCode);
+    let valid = false;
+    if (type !== 'asin' && !validationRegex.test(modifiedCode)) {
+        type = 'unknown';
+    } else {
+        valid = validatorMap[type](modifiedCode);
+    }
     return {
         code,
         type,
@@ -170,4 +175,5 @@ const validate = (code, type) => {
 // console.warn(validate('00837172014104')); // should be a valid GTIN14 !!
 // console.warn(validate('BOOTSTRA P')); // should be an invalid ASIN
 // console.warn(getUpcChecksum('02035616631'));
+// console.warn(validate('Test random text'));
 module.exports = validate;
