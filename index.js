@@ -139,7 +139,7 @@ const validatorMap = {
 const validate = (code, type) => {
     // 1980s era UPC codes were apparently 11 digits, not using a checksum. So, if we get 11, I
     // guess there's not much we can do besides pass it with a 0 prefixing it and hope it works.
-    const modifiedCode = code.length === 11 ? `0${code}` : code;
+    let modifiedCode = code.length === 11 ? `0${code}` : code;
     if (!type) {
         type = getTypeOfBarcode(modifiedCode);
     }
@@ -148,11 +148,11 @@ const validate = (code, type) => {
         if (modifiedCode.startsWith('290')) {
             const [ junk1, junk2, junk3, ...rest ] = modifiedCode;
             const baseCode = rest.join('');
-            modifiedCode = `978${baseCode}${getIsbn13Checksum(`978${baseCode}`)}`;
+            modifiedCode = `978${baseCode.slice(0, -1)}${getIsbn13Checksum(`978${baseCode}`)}`;
         } else if (modifiedCode.startsWith('291')) {
             const [ junk1, junk2, junk3, ...rest ] = modifiedCode;
             const baseCode = rest.join('');
-            modifiedCode = `979${baseCode}${getIsbn13Checksum(`979${baseCode}`)}`
+            modifiedCode = `979${baseCode.slice(0, -1)}${getIsbn13Checksum(`979${baseCode}`)}`
         }
     }
     let valid = false;
@@ -176,4 +176,6 @@ const validate = (code, type) => {
 // console.warn(validate('BOOTSTRA P')); // should be an invalid ASIN
 // console.warn(getUpcChecksum('02035616631'));
 // console.warn(validate('Test random text'));
+// console.warn(validate('2900077274312'));
+// console.warn(validate('2900538754575'));
 module.exports = validate;
